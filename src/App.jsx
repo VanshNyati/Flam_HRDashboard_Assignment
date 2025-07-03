@@ -1,12 +1,16 @@
-import './App.css'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+import Bookmarks from "./pages/Bookmarks";
 
 function App() {
   return (
-    <div className="text-center mt-10 text-3xl font-bold text-blue-600">
-      🚀 Flam HR Dashboard Assignment
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/bookmarks" element={<Bookmarks />} />
+      </Routes>
+    </Router>
   );
 }
 
 export default App;
-
