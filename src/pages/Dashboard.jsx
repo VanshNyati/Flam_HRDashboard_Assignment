@@ -4,15 +4,17 @@ import SearchBar from "../components/SearchBar";
 import FilterDropdown from "../components/FilterDropdown";
 import { getRandomDepartment, getRandomRating } from "../utils/helpers";
 import { departments } from "../data/departments";
-import { useBookmark } from "../context/BookmarkContext"; // ✅
+import { useBookmark } from "../context/BookmarkContext"; // ✅ Import bookmark context
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const [employees, setEmployees] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedDept, setSelectedDept] = useState("All");
 
-  const { toggleBookmark, isUserBookmarked } = useBookmark(); // ✅
+  const { toggleBookmark, isUserBookmarked } = useBookmark(); // ✅ Access context functions
 
+  // Fetching users and enhancing them with department and rating
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
@@ -34,6 +36,7 @@ const Dashboard = () => {
     fetchEmployees();
   }, []);
 
+  // Filtering users based on search + department
   const filteredEmployees = employees.filter((user) => {
     const lower = searchTerm.toLowerCase();
     const matchesSearch =
@@ -50,7 +53,16 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-950 p-6">
-      {/* Header */}
+      {/* Navigation Button */}
+      <div className="flex justify-end mb-4">
+        <Link
+          to="/bookmarks"
+          className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg shadow transition"
+        >
+          View Bookmarked Employees
+        </Link>
+      </div>
+      {/* Header: Title + Search + Filter */}
       <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         <h1 className="text-3xl font-bold text-center text-gray-800 dark:text-white">
           🚀 HR Dashboard
@@ -71,8 +83,8 @@ const Dashboard = () => {
           <EmployeeCard
             key={emp.id}
             user={emp}
-            isBookmarked={isUserBookmarked(emp.id)} // ✅
-            toggleBookmark={() => toggleBookmark(emp)} // ✅
+            isBookmarked={isUserBookmarked(emp.id)} // ✅ Bookmark state
+            toggleBookmark={() => toggleBookmark(emp)} // ✅ Toggle function
           />
         ))}
       </div>

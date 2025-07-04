@@ -1,14 +1,20 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
-// Create Context
 const BookmarkContext = createContext();
 
-// Custom Hook for easy access
 export const useBookmark = () => useContext(BookmarkContext);
 
-// Provider Component
 export const BookmarkProvider = ({ children }) => {
-  const [bookmarkedUsers, setBookmarkedUsers] = useState([]);
+  const [bookmarkedUsers, setBookmarkedUsers] = useState(() => {
+    // Load from localStorage on first render
+    const stored = localStorage.getItem("bookmarkedUsers");
+    return stored ? JSON.parse(stored) : [];
+  });
+
+  useEffect(() => {
+    // Save to localStorage whenever bookmarks change
+    localStorage.setItem("bookmarkedUsers", JSON.stringify(bookmarkedUsers));
+  }, [bookmarkedUsers]);
 
   const toggleBookmark = (user) => {
     const isBookmarked = bookmarkedUsers.some((u) => u.id === user.id);

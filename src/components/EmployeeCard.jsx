@@ -48,7 +48,7 @@ const EmployeeCard = ({ user, isBookmarked, toggleBookmark }) => {
 
         {/* Bookmark */}
         <button
-          onClick={() => toggleBookmark(id)}
+          onClick={() => toggleBookmark(user)}
           className={`flex-1 flex items-center justify-center gap-1 transition py-1.5 rounded-lg font-medium shadow-sm ${
             isBookmarked
               ? "bg-green-600 hover:bg-green-700"
