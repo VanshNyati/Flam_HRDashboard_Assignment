@@ -1,8 +1,14 @@
 import { FaStar, FaBookmark, FaRegBookmark } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const EmployeeCard = ({ user, isBookmarked, toggleBookmark }) => {
   const { firstName, lastName, email, age, department, rating, image, id } =
     user;
+  const navigate = useNavigate();
+
+  const handleView = () => {
+    navigate(`/employee/${id}`, { state: { user } });
+  };
 
   return (
     <div className="bg-gray-800 text-white rounded-2xl shadow-xl hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 p-6 flex flex-col justify-between">
@@ -42,7 +48,10 @@ const EmployeeCard = ({ user, isBookmarked, toggleBookmark }) => {
       {/* Actions */}
       <div className="flex justify-between mt-5 space-x-2 text-xs sm:text-sm">
         {/* View */}
-        <button className="flex-1 bg-blue-600 hover:bg-blue-700 transition text-white py-1.5 rounded-lg font-medium shadow-sm">
+        <button
+          onClick={handleView}
+          className="flex-1 bg-blue-600 hover:bg-blue-700 transition text-white py-1.5 rounded-lg font-medium shadow-sm"
+        >
           View
         </button>
 
